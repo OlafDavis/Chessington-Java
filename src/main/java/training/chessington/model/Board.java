@@ -1,8 +1,12 @@
 package training.chessington.model;
 
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import training.chessington.model.pieces.*;
 
 public class Board {
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private Piece[][] board = new Piece[8][8];
 
@@ -18,7 +22,6 @@ public class Board {
             board.board[1][col] = new Pawn(PlayerColour.BLACK);
             board.board[6][col] = new Pawn(PlayerColour.WHITE);
         }
-
         return board;
     }
 
@@ -40,6 +43,8 @@ public class Board {
     public Piece get(Coordinates coords) {
         return board[coords.getRow()][coords.getCol()];
     }
+
+    public Boolean isEmpty(Coordinates coords) { return board[coords.getRow()][coords.getCol()] == null; }
 
     public void move(Coordinates from, Coordinates to) {
         board[to.getRow()][to.getCol()] = board[from.getRow()][from.getCol()];
