@@ -25,11 +25,13 @@ public class Pawn extends AbstractPiece {
         Move forwardStep, forwardTwoSteps;
         Integer rowDiff = this.colour.equals(PlayerColour.WHITE) ? -1 : 1;
         Integer startRow = this.colour.equals(PlayerColour.WHITE) ? 6 : 1;
+        Coordinates squareInFront = from.plus(rowDiff,0);
+        Coordinates squareTwoInFront = from.plus(rowDiff * 2,0);
         List<Move> moveList = new ArrayList<Move>();
-        if (board.isEmpty(from.plus(rowDiff,0))) {
+        if (board.isEmpty(squareInFront)) {
             forwardStep = new Move(from, from.plus(rowDiff, 0));
             moveList.add(forwardStep);
-            if (from.getRow() == startRow) {
+            if (from.getRow() == startRow && board.isEmpty(squareTwoInFront)) {
                 forwardTwoSteps = new Move(from, from.plus(rowDiff * 2, 0));
                 moveList.add(forwardTwoSteps);
             }
