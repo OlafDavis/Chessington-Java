@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="warn" name="Chessington" packages="">
 <Appenders>
-    <File name="FileAppender" fileName="logs/SupportBank.log">
+    <File name="FileAppender" fileName="logs/Chessington.log">
         <PatternLayout>
             <Pattern>[%d] %p - %c{1} - %m%n</Pattern>
         </PatternLayout>

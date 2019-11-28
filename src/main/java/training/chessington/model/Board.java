@@ -44,7 +44,9 @@ public class Board {
         return board[coords.getRow()][coords.getCol()];
     }
 
-    public Boolean isEmpty(Coordinates coords) { return board[coords.getRow()][coords.getCol()] == null; }
+    public Boolean isEmpty(Coordinates coords) {
+        return (coords.inBounds() && board[coords.getRow()][coords.getCol()] == null);
+    }
 
     public void move(Coordinates from, Coordinates to) {
         board[to.getRow()][to.getCol()] = board[from.getRow()][from.getCol()];

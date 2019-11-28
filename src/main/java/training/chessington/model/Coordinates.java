@@ -19,6 +19,8 @@ public final class Coordinates {
         return col;
     }
 
+    public boolean inBounds() { return (row >= 0 && row <= 7 && col >= 00 && col <= 7); }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
