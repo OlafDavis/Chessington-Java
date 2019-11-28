@@ -71,13 +71,14 @@ public class Board {
     public void move(Coordinates from, Coordinates to) {
         Piece piece = board[from.getRow()][from.getCol()];
         PlayerColour colour = piece.getColour();
+        piece.setHasMoved();
         board[to.getRow()][to.getCol()] = piece;
         board[from.getRow()][from.getCol()] = null;
         if (piece.getType() == Piece.PieceType.PAWN && to.getRow() == colour.getEndRow()) {
             promoteToQueen(to);
         }
     }
-    
+
     private void promoteToQueen(Coordinates coords) {
         Piece piece = board[coords.getRow()][coords.getCol()];
         PlayerColour colour = piece.getColour();

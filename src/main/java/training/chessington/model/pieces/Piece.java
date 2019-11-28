@@ -14,6 +14,8 @@ public interface Piece {
 
     PieceType getType();
     PlayerColour getColour();
+    Boolean getHasMoved();
+    void setHasMoved();
 
     List<Move> getAllowedMoves(Coordinates from, Board board);
 }
