@@ -44,15 +44,11 @@ public class Pawn extends AbstractPiece {
         Integer rowDiff = this.colour.equals(PlayerColour.WHITE) ? -1 : 1;
         Integer[] colDiffs =  {1,-1};
         for (Integer colDiff : colDiffs) {
-            if (capturePossible(from.plus(rowDiff, colDiff), board, getColour())) {
+            if (board.isColour(from.plus(rowDiff, colDiff), colour.getOpposite())) {
                 moveList.add(new Move(from, from.plus(rowDiff, colDiff)));
             }
         }
         return moveList;
-    }
-
-    private Boolean capturePossible(Coordinates to, Board board, PlayerColour myColour) {
-            return (to.inBounds() && !board.isEmpty(to) && board.get(to).getColour() != myColour);
     }
 
 }
