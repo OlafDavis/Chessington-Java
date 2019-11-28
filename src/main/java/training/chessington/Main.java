@@ -16,7 +16,7 @@ public class Main extends Application {
         Board board = Board.forNewGame();
         Game game = new Game(board);
         Parent chessBoard = new ChessApp(game);
-        primaryStage.setTitle("Chessington");
+        primaryStage.setTitle("Chessington!");
         Scene scene = new Scene(new Group());
         primaryStage.setScene(scene);
         scene.setRoot(chessBoard);
