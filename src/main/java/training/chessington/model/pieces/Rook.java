@@ -15,15 +15,34 @@ public class Rook extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        Integer step;
-        Coordinates to;
-        List<Move> movesList = new ArrayList<>();
-        Boolean canMove = true;
-        while (canMove) {
+        List<Move> movesList = getAllowedMovesOneDirection(from, board, 1,0);
+        movesList.addAll(getAllowedMovesOneDirection(from, board, -1,0));
+        movesList.addAll(getAllowedMovesOneDirection(from, board, 0,1));
+        movesList.addAll(getAllowedMovesOneDirection(from, board, 0,-1));
+        return movesList;
+    }
 
+    public List<Move> getAllowedMovesOneDirection(Coordinates from, Board board, Integer rowDiff, Integer colDiff) {
+        Coordinates to = from;
+        List<Move> movesList = new ArrayList<>();
+        Boolean canMoveFurther = true;
+        while (canMoveFurther) {
+            to = to.plus(rowDiff, colDiff);
+            if (!to.inBounds()) {
+                canMoveFurther = false;
+            }
+            else if (board.isEmpty(to)) {
+                movesList.add(new Move(from, to));
+                canMoveFurther = true;
+            } else if (board.get(to).getColour() != board.get(from).getColour()) {
+                movesList.add(new Move(from, to));
+                canMoveFurther = false;
+            }
         }
         return movesList;
     }
+
+
 //    public List<Move> getAllowedMoves(Coordinates from, Board board) {
 //        Integer coord;
 //        Coordinates to;

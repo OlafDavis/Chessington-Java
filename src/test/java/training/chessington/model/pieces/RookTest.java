@@ -65,7 +65,7 @@ public class RookTest {
         board.placePiece(new Coordinates(3, 7), new Rook(PlayerColour.BLACK));
         board.placePiece(new Coordinates(3, 1), new Rook(PlayerColour.BLACK));
         board.placePiece(new Coordinates(0, 5), new Rook(PlayerColour.BLACK));
-        board.placePiece(new Coordinates(2, 5), new Rook(PlayerColour.BLACK));
+        board.placePiece(new Coordinates(5, 5), new Rook(PlayerColour.BLACK));
 
         // Act
         List<Move> moves = rook.getAllowedMoves(coords, board);
@@ -87,7 +87,7 @@ public class RookTest {
         board.placePiece(new Coordinates(3, 7), new Rook(PlayerColour.WHITE));
         board.placePiece(new Coordinates(3, 1), new Rook(PlayerColour.WHITE));
         board.placePiece(new Coordinates(0, 5), new Rook(PlayerColour.WHITE));
-        board.placePiece(new Coordinates(2, 5), new Rook(PlayerColour.WHITE));
+        board.placePiece(new Coordinates(7, 5), new Rook(PlayerColour.WHITE));
 
         // Act
         List<Move> moves = rook.getAllowedMoves(coords, board);
