@@ -26,6 +26,39 @@ public class King extends AbstractPiece {
                 }
             }
         }
+        movesList.addAll(getCastlingMoves(from, board));
         return movesList;
     }
+
+    private List<Move> getCastlingMoves(Coordinates from, Board board) {
+        Boolean blocked;
+        List<Move> movesList = new ArrayList<Move>();
+        Integer backRow = board.get(from).getColour().getBackRow();
+        Coordinates leftTarget = from.plus(0,-2);
+        Coordinates leftRookCoords = new Coordinates(backRow, 0);
+        Piece leftCornerPiece = board.get(leftRookCoords);
+        blocked = false;
+        for (Integer col = 1; col < from.getCol(); col++) {
+            if (!board.isEmpty(new Coordinates(backRow, col))) {
+                blocked = true;
+            }
+        }
+        if (!blocked && !getHasMoved() && !leftCornerPiece.getHasMoved()) {
+            movesList.add(new Move(from, leftTarget));
+        }
+        Coordinates rightTarget = from.plus(0,2);
+        Coordinates rightRookCoords = new Coordinates(backRow, 7);
+        Piece rightCornerPiece = board.get(rightRookCoords);
+        blocked = false;
+        for (Integer col = 6; col > from.getCol(); col--) {
+            if (!board.isEmpty(new Coordinates(backRow, col))) {
+                blocked = true;
+            }
+        }
+        if (!blocked && !getHasMoved() && !rightCornerPiece.getHasMoved()) {
+            movesList.add(new Move(from, rightTarget));
+        }
+        return movesList;
+    }
+
 }
