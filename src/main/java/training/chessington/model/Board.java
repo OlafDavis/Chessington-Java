@@ -44,6 +44,24 @@ public class Board {
         return board[coords.getRow()][coords.getCol()];
     }
 
+    public Boolean isEmptyOrColour(Coordinates coords, PlayerColour colour) {
+        if (coords.inBounds()) {
+            Piece piece = board[coords.getRow()][coords.getCol()];
+            return piece == null || piece.getColour() == colour;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean isColour(Coordinates coords, PlayerColour colour) {
+        if (coords.inBounds()) {
+            Piece piece = board[coords.getRow()][coords.getCol()];
+            return piece != null && piece.getColour() == colour;
+        } else {
+            return false;
+        }
+    }
+
     public Boolean isEmpty(Coordinates coords) {
         return (coords.inBounds() && board[coords.getRow()][coords.getCol()] == null);
     }

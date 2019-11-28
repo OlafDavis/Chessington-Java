@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import training.chessington.model.Board;
 import training.chessington.model.Game;
+import training.chessington.model.PlayerColour;
 import training.chessington.view.ChessApp;
 
 public class Main extends Application {
