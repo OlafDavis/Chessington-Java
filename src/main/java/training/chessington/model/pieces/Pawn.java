@@ -16,53 +16,41 @@ public class Pawn extends AbstractPiece {
 
     @Override
     public List<Move> getAllowedMoves(Coordinates from, Board board) {
-        Move forwardStep, forwardTwoSteps, capture;
+        List<Move> moveList = getAllowedSteps(from, board);
+        moveList.addAll(getAllowedCaptures(from, board));
+        return moveList;
+    }
+
+    private List<Move> getAllowedSteps(Coordinates from, Board board) {
+        Move forwardStep, forwardTwoSteps;
+        Integer rowDiff = this.colour.equals(PlayerColour.WHITE) ? -1 : 1;
+        Integer startRow = this.colour.equals(PlayerColour.WHITE) ? 6 : 1;
         List<Move> moveList = new ArrayList<Move>();
-        if (this.colour.equals(PlayerColour.WHITE)) {
-            if (board.isEmpty(from.plus(-1,0))) {
-                forwardStep = new Move(from, from.plus(-1, 0));
-                moveList.add(forwardStep);
-                if (from.getRow() == 6) {
-                    forwardTwoSteps = new Move(from, from.plus(-2, 0));
-                    moveList.add(forwardTwoSteps);
-                }
-            }
-            if (from.plus(-1,1).inBounds()
-                    && !board.isEmpty(from.plus(-1,1))
-                    && board.get(from.plus(-1,1)).getColour() == PlayerColour.BLACK) {
-                capture = new Move(from, from.plus(-1,1));
-                moveList.add(capture);
-            }
-            if (from.plus(-1,-1).inBounds()
-                    && !board.isEmpty(from.plus(-1,-1))
-                    && board.get(from.plus(-1,-1)).getColour() == PlayerColour.BLACK) {
-                capture = new Move(from, from.plus(-1,-1));
-                moveList.add(capture);
-            }
-        } else if (this.colour.equals(PlayerColour.BLACK)) {
-            if (board.isEmpty(from.plus(1,0))) {
-                forwardStep = new Move(from, from.plus(1, 0));
-                moveList.add(forwardStep);
-                if (from.getRow() == 1) {
-                    forwardTwoSteps = new Move(from, from.plus(2, 0));
-                    moveList.add(forwardTwoSteps);
-                }
-            }
-            if (from.plus(1,1).inBounds()
-                    && !board.isEmpty(from.plus(1,1))
-                    && board.get(from.plus(1,1)).getColour() == PlayerColour.WHITE) {
-                capture = new Move(from, from.plus(1,1));
-                moveList.add(capture);
-            }
-            if (from.plus(1,-1).inBounds()
-                    && !board.isEmpty(from.plus(1,-1))
-                    && board.get(from.plus(1,-1)).getColour() == PlayerColour.WHITE) {
-                capture = new Move(from, from.plus(1,-1));
-                moveList.add(capture);
+        if (board.isEmpty(from.plus(rowDiff,0))) {
+            forwardStep = new Move(from, from.plus(rowDiff, 0));
+            moveList.add(forwardStep);
+            if (from.getRow() == startRow) {
+                forwardTwoSteps = new Move(from, from.plus(rowDiff * 2, 0));
+                moveList.add(forwardTwoSteps);
             }
         }
         return moveList;
     }
-    
+
+    private List<Move> getAllowedCaptures(Coordinates from, Board board) {
+        List<Move> moveList = new ArrayList<Move>();
+        Integer rowDiff = this.colour.equals(PlayerColour.WHITE) ? -1 : 1;
+        Integer[] colDiffs =  {1,-1};
+        for (Integer colDiff : colDiffs) {
+            if (capturePossible(from.plus(rowDiff, colDiff), board, getColour())) {
+                moveList.add(new Move(from, from.plus(rowDiff, colDiff)));
+            }
+        }
+        return moveList;
+    }
+
+    private Boolean capturePossible(Coordinates to, Board board, PlayerColour myColour) {
+            return (to.inBounds() && !board.isEmpty(to) && board.get(to).getColour() != myColour);
+    }
 
 }
