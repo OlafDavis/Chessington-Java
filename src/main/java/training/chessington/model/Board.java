@@ -5,6 +5,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import training.chessington.model.pieces.*;
 
+import java.util.List;
+
 public class Board {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -67,8 +69,19 @@ public class Board {
     }
 
     public void move(Coordinates from, Coordinates to) {
-        board[to.getRow()][to.getCol()] = board[from.getRow()][from.getCol()];
+        Piece piece = board[from.getRow()][from.getCol()];
+        PlayerColour colour = piece.getColour();
+        board[to.getRow()][to.getCol()] = piece;
         board[from.getRow()][from.getCol()] = null;
+        if (piece.getType() == Piece.PieceType.PAWN && to.getRow() == colour.getEndRow()) {
+            promoteToQueen(to);
+        }
+    }
+    
+    private void promoteToQueen(Coordinates coords) {
+        Piece piece = board[coords.getRow()][coords.getCol()];
+        PlayerColour colour = piece.getColour();
+        board[coords.getRow()][coords.getCol()] = new Queen(colour);
     }
 
     public void placePiece(Coordinates coords, Piece piece) {
