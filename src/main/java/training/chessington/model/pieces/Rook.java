@@ -37,6 +37,9 @@ public class Rook extends AbstractPiece {
             } else if (board.get(to).getColour() != board.get(from).getColour()) {
                 movesList.add(new Move(from, to));
                 canMoveFurther = false;
+
+            } else if (board.get(to).getColour() == board.get(from).getColour()) {
+                canMoveFurther = false;
             }
         }
         return movesList;

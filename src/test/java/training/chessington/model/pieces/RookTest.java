@@ -143,26 +143,50 @@ public class RookTest {
         assertThat(moves).doesNotContain(new Move(coords, coords.plus(-1, 0)));
     }
 
-//    @Test
-//    public void whiteRookCannotMoveIfPieceBlocking() {
-//        // Arrange
-//        Board board = Board.empty();
-//        Piece rook = new Rook(PlayerColour.BLACK);
-//        Coordinates coords = new Coordinates(3,5);
-//        board.placePiece(coords, rook);
-//        board.placePiece(new Coordinates(3, 7), new Rook(PlayerColour.WHITE));
-//        board.placePiece(new Coordinates(3, 1), new Rook(PlayerColour.WHITE));
-//        board.placePiece(new Coordinates(0, 5), new Rook(PlayerColour.WHITE));
-//        board.placePiece(new Coordinates(2, 5), new Rook(PlayerColour.WHITE));
-//
-//        // Act
-//        List<Move> moves = rook.getAllowedMoves(coords, board);
-//
-//        // Assert
-//        assertThat(moves).contains(new Move(coords, coords.plus(0, 2)));
-//        assertThat(moves).contains(new Move(coords, coords.plus(0, -4)));
-//        assertThat(moves).contains(new Move(coords, coords.plus(-3, 0)));
-//        assertThat(moves).contains(new Move(coords, coords.plus(-1, 0)));
-//    }
+    @Test
+    public void whiteRookCannotMoveIfPieceBlocking() {
+        // Arrange
+        Board board = Board.empty();
+        Piece rook = new Rook(PlayerColour.WHITE);
+        Coordinates coords = new Coordinates(3,5);
+        board.placePiece(coords, rook);
+        board.placePiece(new Coordinates(3, 6), new Rook(PlayerColour.WHITE));
+        board.placePiece(new Coordinates(3, 3), new Rook(PlayerColour.WHITE));
+        board.placePiece(new Coordinates(2, 5), new Rook(PlayerColour.BLACK));
+        board.placePiece(new Coordinates(1, 5), new Rook(PlayerColour.BLACK));
+
+        // Act
+        List<Move> moves = rook.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(3,7)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(3,2)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(3,0)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(1,5)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(0,5)));
+    }
+
+    @Test
+    public void blackRookCannotMoveIfPieceBlocking() {
+        // Arrange
+        Board board = Board.empty();
+        Piece rook = new Rook(PlayerColour.BLACK);
+        Coordinates coords = new Coordinates(3,5);
+        board.placePiece(coords, rook);
+        board.placePiece(new Coordinates(3, 6), new Rook(PlayerColour.WHITE));
+        board.placePiece(new Coordinates(3, 3), new Rook(PlayerColour.BLACK));
+        board.placePiece(new Coordinates(2, 5), new Rook(PlayerColour.WHITE));
+        board.placePiece(new Coordinates(1, 5), new Rook(PlayerColour.WHITE));
+
+        // Act
+        List<Move> moves = rook.getAllowedMoves(coords, board);
+
+        // Assert
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(3,7)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(3,2)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(3,0)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(1,5)));
+        assertThat(moves).doesNotContain(new Move(coords, new Coordinates(0,5)));
+    }
 
 }
