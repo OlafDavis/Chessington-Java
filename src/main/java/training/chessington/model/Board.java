@@ -74,11 +74,26 @@ public class Board {
         piece.setHasMoved();
         board[to.getRow()][to.getCol()] = piece;
         board[from.getRow()][from.getCol()] = null;
-        System.out.println(type);
         switch (type) {
-            case PROMOTION: promoteToQueen(to, colour); break;
-            case CASTLE: System.out.println("Castle"); break;
+            case PROMOTION:
+                promoteToQueen(to, colour);
+                break;
+            case LEFTCASTLE:
+                moveRookCastle(colour, MoveType.LEFTCASTLE);
+                break;
+            case RIGHTCASTLE:
+                moveRookCastle(colour, MoveType.RIGHTCASTLE);
+                break;
         }
+    }
+
+    private void moveRookCastle(PlayerColour colour, MoveType type) {
+        Integer backRow = colour.getBackRow();
+        Integer fromCol = type.equals(MoveType.LEFTCASTLE) ? 0 : 7;
+        Integer toCol = type.equals(MoveType.LEFTCASTLE) ? 3 : 5;
+        Piece piece = board[backRow][fromCol];
+        board[backRow][toCol] = piece;
+        board[backRow][fromCol] = null;
     }
 
     private void promoteToQueen(Coordinates coords, PlayerColour colour) {

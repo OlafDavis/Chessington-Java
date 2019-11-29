@@ -1,9 +1,6 @@
 package training.chessington.model.pieces;
 
-import training.chessington.model.Board;
-import training.chessington.model.Coordinates;
-import training.chessington.model.Move;
-import training.chessington.model.PlayerColour;
+import training.chessington.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +41,7 @@ public class King extends AbstractPiece {
             }
         }
         if (!blocked && !getHasMoved() && !leftCornerPiece.getHasMoved()) {
-            movesList.add(new Move(from, leftTarget));
+            movesList.add(new Move(from, leftTarget, MoveType.LEFTCASTLE));
         }
         Coordinates rightTarget = from.plus(0,2);
         Coordinates rightRookCoords = new Coordinates(backRow, 7);
@@ -56,7 +53,7 @@ public class King extends AbstractPiece {
             }
         }
         if (!blocked && !getHasMoved() && !rightCornerPiece.getHasMoved()) {
-            movesList.add(new Move(from, rightTarget));
+            movesList.add(new Move(from, rightTarget, MoveType.RIGHTCASTLE));
         }
         return movesList;
     }
