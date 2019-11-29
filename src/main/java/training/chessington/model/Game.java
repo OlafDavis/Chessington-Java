@@ -41,6 +41,7 @@ public class Game {
 
         Coordinates from = move.getFrom();
         Coordinates to = move.getTo();
+        MoveType type = move.getType();
 
         Piece piece = board.get(from);
         if (piece == null) {
@@ -55,7 +56,7 @@ public class Game {
             throw new InvalidMoveException(String.format("Cannot move piece %s from %s to %s", piece, from, to));
         }
 
-        board.move(from, to);
+        board.move(from, to, type);
         nextPlayer = nextPlayer.getOpposite();
     }
 

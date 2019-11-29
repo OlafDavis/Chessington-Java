@@ -2,13 +2,23 @@ package training.chessington.model;
 
 import java.util.Objects;
 
+import static training.chessington.model.MoveType.NORMAL;
+
 public final class Move {
     private final Coordinates from;
     private final Coordinates to;
+    private final MoveType type;
 
     public Move(Coordinates from, Coordinates to) {
         this.from = from;
         this.to = to;
+        this.type = NORMAL;
+    }
+
+    public Move(Coordinates from, Coordinates to, MoveType type) {
+        this.from = from;
+        this.to = to;
+        this.type = type;
     }
 
     public Coordinates getFrom() {
@@ -17,6 +27,10 @@ public final class Move {
 
     public Coordinates getTo() {
         return to;
+    }
+
+    public MoveType getType() {
+        return type;
     }
 
     @Override

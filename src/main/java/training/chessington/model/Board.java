@@ -68,20 +68,20 @@ public class Board {
         return (coords.inBounds() && board[coords.getRow()][coords.getCol()] == null);
     }
 
-    public void move(Coordinates from, Coordinates to) {
+    public void move(Coordinates from, Coordinates to, MoveType type) {
         Piece piece = board[from.getRow()][from.getCol()];
         PlayerColour colour = piece.getColour();
         piece.setHasMoved();
         board[to.getRow()][to.getCol()] = piece;
         board[from.getRow()][from.getCol()] = null;
-        if (piece.getType() == Piece.PieceType.PAWN && to.getRow() == colour.getEndRow()) {
-            promoteToQueen(to);
+        System.out.println(type);
+        switch (type) {
+            case PROMOTION: promoteToQueen(to, colour); break;
+            case CASTLE: System.out.println("Castle"); break;
         }
     }
 
-    private void promoteToQueen(Coordinates coords) {
-        Piece piece = board[coords.getRow()][coords.getCol()];
-        PlayerColour colour = piece.getColour();
+    private void promoteToQueen(Coordinates coords, PlayerColour colour) {
         board[coords.getRow()][coords.getCol()] = new Queen(colour);
     }
 

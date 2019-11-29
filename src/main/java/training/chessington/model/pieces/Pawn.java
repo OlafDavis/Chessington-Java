@@ -1,9 +1,6 @@
 package training.chessington.model.pieces;
 
-import training.chessington.model.Board;
-import training.chessington.model.Coordinates;
-import training.chessington.model.Move;
-import training.chessington.model.PlayerColour;
+import training.chessington.model.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -28,10 +25,10 @@ public class Pawn extends AbstractPiece {
         Coordinates squareTwoInFront = from.plus(rowDiff * 2,0);
         List<Move> moveList = new ArrayList<Move>();
         if (board.isEmpty(squareInFront)) {
-            forwardStep = new Move(from, from.plus(rowDiff, 0));
+            forwardStep = pawnMove(from, from.plus(rowDiff, 0));
             moveList.add(forwardStep);
             if (!getHasMoved() && board.isEmpty(squareTwoInFront)) {
-                forwardTwoSteps = new Move(from, from.plus(rowDiff * 2, 0));
+                forwardTwoSteps = pawnMove(from, from.plus(rowDiff * 2, 0));
                 moveList.add(forwardTwoSteps);
             }
         }
@@ -44,10 +41,18 @@ public class Pawn extends AbstractPiece {
         Integer[] colDiffs =  {1,-1};
         for (Integer colDiff : colDiffs) {
             if (board.isColour(from.plus(rowDiff, colDiff), colour.getOpposite())) {
-                moveList.add(new Move(from, from.plus(rowDiff, colDiff)));
+                moveList.add(pawnMove(from, from.plus(rowDiff, colDiff)));
             }
         }
         return moveList;
+    }
+
+    private Move pawnMove(Coordinates from, Coordinates to) {
+        if (to.getRow() == colour.getEndRow()) {
+            return new Move(from, to, MoveType.PROMOTION);
+        } else {
+            return new Move(from, to);
+        }
     }
 
 }

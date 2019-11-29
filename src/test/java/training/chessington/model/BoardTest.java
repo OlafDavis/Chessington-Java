@@ -3,6 +3,7 @@ package training.chessington.model;
 import org.junit.Test;
 import training.chessington.model.pieces.Piece;
 
+import static training.chessington.model.MoveType.NORMAL;
 import static training.chessington.model.pieces.Piece.PieceType.PAWN;
 import static training.chessington.model.pieces.PieceAssert.*;
 import static org.assertj.core.api.Assertions.*;
@@ -41,7 +42,7 @@ public class BoardTest {
         Coordinates to = new Coordinates(4, 4);
 
         // Act
-        board.move(from, to);
+        board.move(from, to, NORMAL);
 
         // Assert
         assertThat(board.get(from)).isNull();

@@ -1,10 +1,7 @@
 package training.chessington.model.pieces;
 
 import org.junit.Test;
-import training.chessington.model.Board;
-import training.chessington.model.Coordinates;
-import training.chessington.model.Move;
-import training.chessington.model.PlayerColour;
+import training.chessington.model.*;
 
 import java.util.List;
 
@@ -80,7 +77,7 @@ public class PawnTest {
         board.placePiece(initial, pawn);
 
         Coordinates moved = initial.plus(-1, 0);
-        board.move(initial, moved);
+        board.move(initial, moved, MoveType.NORMAL);
 
         // Act
         List<Move> moves = pawn.getAllowedMoves(moved, board);
@@ -98,7 +95,7 @@ public class PawnTest {
         board.placePiece(initial, pawn);
 
         Coordinates moved = initial.plus(1, 0);
-        board.move(initial, moved);
+        board.move(initial, moved, MoveType.NORMAL);
 
         // Act
         List<Move> moves = pawn.getAllowedMoves(moved, board);

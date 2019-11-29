@@ -10,7 +10,10 @@ import training.chessington.model.InvalidMoveException;
 import training.chessington.model.Move;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ChessApp extends Parent {
 
@@ -19,7 +22,7 @@ public class ChessApp extends Parent {
     private final Game game;
     private GridPane grid;
     private Square selectedSquare;
-    private Set<Square> validMoveSquares = new HashSet<>();
+    private Set<Move> validMoves = new HashSet<>();
 
     public ChessApp(Game game) {
         this.game = game;
@@ -44,22 +47,25 @@ public class ChessApp extends Parent {
     }
 
     private void onSquareClicked(Square square) {
-        if (validMoveSquares.contains(square)) {
-            onMoveMade(square);
+        Optional<Move> optionalMove = validMoves.stream()
+                .filter(move -> squares[move.getTo().getRow()][move.getTo().getCol()].equals(square))
+                .findFirst();
+        if (optionalMove.isPresent()) {
+            onMoveMade(optionalMove.get());
         } else {
             onNewSquareSelected(square);
         }
     }
 
-    private void onMoveMade(Square moveTo) {
+    private void onMoveMade(Move move) {
         try {
-            game.makeMove(new Move(selectedSquare.getCoordinates(), moveTo.getCoordinates()));
+            game.makeMove(move);
         } catch (InvalidMoveException e) {
             LOGGER.error("Invalid move attempted", e);
         }
         redrawPieces();
         resetHighlighting();
-        validMoveSquares.clear();
+        validMoves.clear();
         selectedSquare = null;
 
         if (game.isEnded()) {
@@ -75,13 +81,13 @@ public class ChessApp extends Parent {
     }
 
     private void onNewSquareSelected(Square square) {
-        validMoveSquares.clear();
+        validMoves.clear();
         resetHighlighting();
         selectedSquare = square;
         square.showAsSelected();
         for (Move move : game.getAllowedMoves(square.getCoordinates())) {
             Square targetSquare = squares[move.getTo().getRow()][move.getTo().getCol()];
-            validMoveSquares.add(targetSquare);
+            validMoves.add(move);
             targetSquare.showAsMoveOption();
         }
     }
